@@ -31,13 +31,13 @@ export class AppComponent implements OnInit {
         this.playerCards = [];
         this.iaCards = [];
 
-        for (let i = 0; i < 2; i++) {
-            this.playerCards.push(this.cards.shift());
-        }
+        let player = this.appService.dealCards(this.cards);
+        this.playerCards = player.cards;
+        this.cards = player.dock;
 
-        for (let i = 0; i < 2; i++) {
-            this.iaCards.push(this.cards.shift());
-        }
+        let ia = this.appService.dealCards(this.cards);
+        this.iaCards = ia.cards;
+        this.cards = ia.dock;
 
         this.playerScore = this.appService.countScore(this.playerCards);
         this.iaScore = this.appService.countScore(this.iaCards);

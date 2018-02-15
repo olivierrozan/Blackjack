@@ -49,4 +49,17 @@ export class AppService {
 
         return score;
     }
+
+    dealCards(dock: any[]): any {
+        let cards = [];
+
+        for (let i = 0; i < 2; i++) {
+            cards.push(dock.shift());
+        }
+
+        return {
+            'cards': cards,
+            'dock': dock
+        };
+    }
 }
