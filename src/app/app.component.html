@@ -1,15 +1,17 @@
 <div class="header-container">
     <header>
-        <h1>Blackjack ♥♦♣♠ <span style="font-size: 18px;">{{ cards.length }} Cards left</span></h1>
-        
+        <h1>Blackjack
+            <span style="font-size: 18px;">{{ cards.length }} Cards left</span>
+            <span style="font-size: 24px; margin-left: 10%;">${{ money }}</span>
+        </h1>
     </header>
 </div>
 
 <div class="main-container">
     <div id="iaSide">
         <div class="card" *ngFor='let one of iaCards; last as isLast' 
-        [style.background]="(isLast && play) ? 'rgb(160,0,0)' : 'white'"
-        [style.color]="(isLast && play) ? 'rgb(160,0,0)' : 'black'">
+            [style.background]="(isLast && play < 2) ? 'rgb(160,0,0)' : 'white'"
+            [style.color]="(isLast && play < 2) ? 'rgb(160,0,0)' : 'black'">
             <span>{{one.label}} {{one.color}}</span>
         </div>
     </div>
@@ -20,9 +22,25 @@
     <div id="playerSide">
         <card [card]="playerCards"></card>
     </div>
+
     <div id="buttonsList">
-        <button *ngIf="playerScore < 21" class="btn btn-md btn-primary" (click)="addCard()">Hit</button>
-        <button *ngIf="playerScore < 21" class="btn btn-md btn-warning" (click)="stand()">Stand</button>
-        <button *ngIf="playerScore >= 21" class="btn btn-md btn-info" (click)="deal()">Restart</button>
+        <h3 id="bet">{{ playerBet }}</h3>
+        <div>
+            <button *ngIf="play === 1 && playerScore < 21" class="btn btn-md btn-primary" (click)="addCard()">Hit</button>
+            <button *ngIf="play === 1 && playerScore < 21" class="btn btn-md btn-warning" (click)="stand()">Stand</button>
+            <button *ngIf="play === 1 && playerScore >= 21" class="btn btn-md btn-info" (click)="deal()">Restart</button>
+        </div>
+
+        <div *ngIf="play === 0">
+            <button class="btn btn-md btn-info token" (click)="bet(1)">1</button>
+            <button class="btn btn-md btn-info token" (click)="bet(5)">5</button>
+            <button class="btn btn-md btn-primary token" (click)="bet(10)">10</button>
+            <button class="btn btn-md btn-primary token" (click)="bet(50)">50</button>
+            <button class="btn btn-md btn-warning token" (click)="bet(100)">100</button>
+            <button class="btn btn-md btn-warning token" (click)="bet(500)">500</button>
+            <button class="btn btn-md btn-danger token" (click)="resetBet()">Reset</button>
+            <br />
+            <button [disabled]="playerBet === 0" style='margin: 10px !important;' class="btn btn-md btn-primary" (click)="startGame()">Play</button>
+        </div>
     </div>
 </div>

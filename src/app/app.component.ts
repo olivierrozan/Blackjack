@@ -13,7 +13,9 @@ export class AppComponent implements OnInit {
     playerScore: number;
     iaCards: any[];
     iaScore: number;
-    play: boolean;
+    play: number;
+    playerBet: number;
+    money: number;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
         private appService: AppService,
@@ -23,12 +25,14 @@ export class AppComponent implements OnInit {
         console.log('Application Initialized!');
         this.cards = this.appService.initDock();
         this.deal();
-        this.play = true;
+        this.money = 1000;
     }
 
     deal() {
         this.playerCards = [];
         this.iaCards = [];
+        this.play = 0;
+        this.playerBet = 0;
 
         let player = this.appService.dealCards(this.cards);
         this.playerCards = player.cards;
@@ -55,7 +59,25 @@ export class AppComponent implements OnInit {
         ref.changeDetectorRef.detectChanges();
     }
 
-    stand() {
-        this.play = !this.play;
+    stand(): void {
+        this.play ++;
+
+        if (this.play > 2) {
+            this.play = 0;
+        }
+    }
+
+    bet(bet: number): void {
+        this.playerBet += bet;
+    }
+
+    startGame(): void {
+        console.log('play!');
+        this.play = 1;
+        this.money -= this.playerBet;
+    }
+
+    resetBet() {
+        this.playerBet = 0;
     }
 }
