@@ -12,16 +12,7 @@ h1 {
     margin-bottom: 22px;
 }
 
-a {
-    text-decoration: none;
-    color: #337ab7;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.header-container, .main-container, .footer-container {
+.header-container, .main-container {
     width: 700px;
     margin: 0 auto;
 }
@@ -35,21 +26,24 @@ a:hover {
     padding: 16px 23px;
 }
 
-.main-container h3 {
-    margin: 0;
-    color: #373E41;
-    font-size: 20px;
+.card {
+    background: white;
+    border: 1px solid black;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+    border-radius: 5px;
+    padding: 10px;
+    width: 100px;
+    height: 200px;
+    display: inline-flex;    
     font-weight: bold;
-    background-color: #ECEFF1;
+    margin: 10px -25px;
 }
 
-.main-container h4 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 24px;
+#iaSide, #playerSide {
+    text-align: center;
 }
 
-.main-container p {
-    margin: 0;
+h2 {
+    text-align: center;
+    color: white;
 }

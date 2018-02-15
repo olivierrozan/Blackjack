@@ -3,8 +3,7 @@ import {CardService} from './cards.service';
 
 @Component({
     selector: 'card',
-    templateUrl: './cards.component.html',
-    styleUrls: ['./cards.component.css']
+    templateUrl: './cards.component.html'
 })
 export class CardComponent implements AfterViewInit {
     @Input() card: any[];
