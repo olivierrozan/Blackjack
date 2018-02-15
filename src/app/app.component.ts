@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
     playerScore: number;
     iaCards: any[];
     iaScore: number;
+    play: boolean;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
         private appService: AppService,
@@ -20,10 +21,9 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         console.log('Application Initialized!');
-
         this.cards = this.appService.initDock();
-
         this.deal();
+        this.play = true;
     }
 
     deal() {
@@ -53,5 +53,9 @@ export class AppComponent implements OnInit {
         const ref = this.viewContainerRef.createComponent(factory);
         this.playerScore = this.appService.countScore(this.playerCards);
         ref.changeDetectorRef.detectChanges();
+    }
+
+    stand() {
+        this.play = !this.play;
     }
 }
