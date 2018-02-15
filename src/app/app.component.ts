@@ -69,6 +69,9 @@ export class AppComponent implements OnInit {
 
     bet(bet: number): void {
         this.playerBet += bet;
+        if (this.playerBet > this.money) {
+            this.playerBet = this.money;
+        }
     }
 
     startGame(): void {
