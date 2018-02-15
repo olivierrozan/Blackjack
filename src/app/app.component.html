@@ -12,15 +12,15 @@
         </div>
     </div>
 
-    <h2>{{ iaScore }}</h2>
+    <h2 [style.color]="iaScore === 21 ? 'blue' : (iaScore < 21 ? 'white' : 'red')">{{ iaScore }}</h2>
     <h2 [style.color]="playerScore === 21 ? 'blue' : (playerScore < 21 ? 'white' : 'red')">{{ playerScore }}</h2>
 
     <div id="playerSide">
-        <card #oneCard [card]="playerCards"></card>
+        <card [card]="playerCards"></card>
     </div>
     <div id="buttonsList">
         <button *ngIf="playerScore < 21" class="btn btn-md btn-primary" (click)="addCard()">Hit</button>
         <button *ngIf="playerScore < 21" class="btn btn-md btn-warning">Stand</button>
-        <button *ngIf="playerScore >= 21" class="btn btn-md btn-info" (click)="restart()">Restart</button>
+        <button *ngIf="playerScore >= 21" class="btn btn-md btn-info" (click)="deal()">Restart</button>
     </div>
 </div>

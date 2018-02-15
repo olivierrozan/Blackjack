@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { CardComponent } from './cards/cards.component';
 import { CardService } from './cards/cards.service';
+import { AppService } from './app.service';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/main.css';
@@ -22,7 +23,7 @@ import '../styles/main.css';
     ],
     declarations: [AppComponent, CardComponent],
     entryComponents: [CardComponent],
-    providers: [CardService],
+    providers: [CardService, AppService],
     bootstrap: [AppComponent]
 })
 
