@@ -48,6 +48,12 @@ export class AppComponent implements OnInit {
 
     addCard() {
         this.playerCards.push(this.cards.shift());
+        this.playerScore = this.appService.countScore(this.playerCards);
+        console.log('one more card for player ', this.playerScore);
+        if (this.playerScore >= 21) {
+            this.play = 2;
+            console.log('player has played');
+        }
 
         if (this.cards.length < 4) {
             this.cards = this.appService.initDock();
@@ -55,16 +61,11 @@ export class AppComponent implements OnInit {
 
         const factory = this.componentFactoryResolver.resolveComponentFactory(CardComponent);
         const ref = this.viewContainerRef.createComponent(factory);
-        this.playerScore = this.appService.countScore(this.playerCards);
         ref.changeDetectorRef.detectChanges();
     }
 
     stand(): void {
-        this.play ++;
-
-        if (this.play > 2) {
-            this.play = 0;
-        }
+        this.play = 2;
     }
 
     bet(bet: number): void {
@@ -78,6 +79,11 @@ export class AppComponent implements OnInit {
         console.log('play!');
         this.play = 1;
         this.money -= this.playerBet;
+
+        if (this.playerScore === 21) {
+            console.log('**BLACKJACK**');
+            this.play = 2;
+        }
     }
 
     resetBet() {
