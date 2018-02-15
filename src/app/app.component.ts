@@ -44,6 +44,11 @@ export class AppComponent implements OnInit {
 
     addCard() {
         this.playerCards.push(this.cards.shift());
+
+        if (this.cards.length < 4) {
+            this.cards = this.appService.initDock();
+        }
+
         const factory = this.componentFactoryResolver.resolveComponentFactory(CardComponent);
         const ref = this.viewContainerRef.createComponent(factory);
         this.playerScore = this.appService.countScore(this.playerCards);
