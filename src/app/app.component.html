@@ -1,0 +1,26 @@
+<div class="header-container">
+    <header>
+        <h1>Blackjack ♥♦♣♠ <span style="font-size: 18px;">{{ cards.length }} Cards left</span></h1>
+        
+    </header>
+</div>
+
+<div class="main-container">
+    <div id="iaSide">
+        <div class="card" *ngFor='let one of iaCards'>
+            <span>{{one.label}} {{one.color}}</span>
+        </div>
+    </div>
+
+    <h2>{{ iaScore }}</h2>
+    <h2 [style.color]="playerScore === 21 ? 'blue' : (playerScore < 21 ? 'white' : 'red')">{{ playerScore }}</h2>
+
+    <div id="playerSide">
+        <card #oneCard [card]="playerCards"></card>
+    </div>
+    <div id="buttonsList">
+        <button *ngIf="playerScore < 21" class="btn btn-md btn-primary" (click)="addCard()">Hit</button>
+        <button *ngIf="playerScore < 21" class="btn btn-md btn-warning">Stand</button>
+        <button *ngIf="playerScore >= 21" class="btn btn-md btn-info" (click)="restart()">Restart</button>
+    </div>
+</div>
