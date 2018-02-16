@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
         this.money = 1000;
         this.message = '';
     }
+
     /**
      * deal
      * Deals cards to player and dealer
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit {
         this.playerScore = this.appService.countScore(this.playerCards);
         this.iaScore = this.appService.countScore(this.iaCards);
     }
+
     /**
      * addCard
      * Adds a card to player
@@ -66,8 +68,7 @@ export class AppComponent implements OnInit {
 
         // Finishes the game if score is greater than 21
         if (this.playerScore >= 21) {
-            this.play = 2;
-            this.checkWinner();
+            this.stand();
         }
 
         // Re-init dock if empty
@@ -80,6 +81,7 @@ export class AppComponent implements OnInit {
         const ref = this.viewContainerRef.createComponent(factory);
         ref.changeDetectorRef.detectChanges();
     }
+
     /**
      * stand
      * Player stops to play
@@ -90,6 +92,7 @@ export class AppComponent implements OnInit {
         this.play = 2;
         this.checkWinner();
     }
+
     /**
      * bet
      * Displays the bet on ihm
@@ -100,6 +103,7 @@ export class AppComponent implements OnInit {
             this.playerBet = this.money;
         }
     }
+
     /**
      * startGame
      * Player has finished to bet
@@ -111,10 +115,14 @@ export class AppComponent implements OnInit {
 
         // Checks Blakjack
         if (this.playerScore === 21 || this.iaScore === 21) {
-            this.play = 2;
-            this.checkWinner();
+            this.stand();
+
+            if (this.playerScore === 21) {
+                this.money += (1.5 * this.playerBet);
+            }
         }
     }
+
     /**
      * resetBet
      * Resets the bet
@@ -139,8 +147,6 @@ export class AppComponent implements OnInit {
         } else if (this.iaScore === this.playerScore) {
             this.message = 'Draw!';
             this.money += this.playerBet;
-        } else if (this.playerScore === 21) {
-            this.money += (1.5 * this.playerBet);
         }
     }
 }
