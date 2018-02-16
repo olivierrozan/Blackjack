@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
     play: number;
     playerBet: number;
     money: number;
+    message: string;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
         private appService: AppService,
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
         this.cards = this.appService.initDock();
         this.deal();
         this.money = 1000;
+        this.message = '';
     }
 
     deal() {
@@ -33,6 +35,7 @@ export class AppComponent implements OnInit {
         this.iaCards = [];
         this.play = 0;
         this.playerBet = 0;
+        this.message = '';
 
         let player = this.appService.dealCards(this.cards);
         this.playerCards = player.cards;
@@ -53,6 +56,7 @@ export class AppComponent implements OnInit {
         if (this.playerScore >= 21) {
             this.play = 2;
             console.log('player has played');
+            this.checkWinner();
         }
 
         if (this.cards.length < 4) {
@@ -66,6 +70,7 @@ export class AppComponent implements OnInit {
 
     stand(): void {
         this.play = 2;
+        this.checkWinner();
     }
 
     bet(bet: number): void {
@@ -80,13 +85,30 @@ export class AppComponent implements OnInit {
         this.play = 1;
         this.money -= this.playerBet;
 
-        if (this.playerScore === 21) {
+        if (this.playerScore === 21 || this.iaScore === 21) {
             console.log('**BLACKJACK**');
             this.play = 2;
+            this.checkWinner();
         }
     }
 
     resetBet() {
         this.playerBet = 0;
+    }
+
+    checkWinner() {
+        if (this.playerScore > 21) {
+            this.message = 'You lose!';
+        } else if (this.playerScore > this.iaScore && this.playerScore <= 21) {
+            this.message = 'You win!';
+            this.money += (2 * this.playerBet);
+        } else if (this.iaScore > this.playerScore && this.iaScore <= 21) {
+            this.message = 'You lose!';
+        } else if (this.iaScore === this.playerScore) {
+            this.message = 'Draw!';
+            this.money += this.playerBet;
+        } else if (this.playerScore === 21) {
+            this.money += (3 * this.playerBet);
+        }
     }
 }

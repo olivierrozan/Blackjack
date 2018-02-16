@@ -2,7 +2,7 @@
     <header>
         <h1>Blackjack
             <span style="font-size: 18px;">{{ cards.length }} Cards left</span>
-            <span style="font-size: 24px; margin-left: 10%;">${{ money }}</span>
+            <span style="font-size: 24px; margin-left: 10%;">{{ money | currency:'USD':'code' }}</span>
         </h1>
     </header>
 </div>
@@ -17,14 +17,14 @@
     </div>
 
     <h2 [style.visibility]="play < 2 ? 'hidden' : 'visible'" [style.color]="iaScore === 21 ? 'blue' : (iaScore < 21 ? 'white' : 'red')">{{ iaScore }}</h2>
-    <h2 [style.visibility]="play === 0 ? 'hidden' : 'visible'" [style.color]="playerScore === 21 ? 'blue' : (playerScore < 21 ? 'white' : 'red')">{{ playerScore }}</h2>
+    <h2 [style.visibility]="play === 0 ? 'hidden' : 'visible'" [style.color]="playerScore === 21 ? 'blue' : (playerScore < 21 ? 'white' : 'red')">{{ playerScore }} {{ message }}</h2>
 
     <div id="playerSide" [style.visibility]="play === 0 ? 'hidden' : 'visible'">
         <card [card]="playerCards"></card>
     </div>
 
     <div id="buttonsList">
-        <h3 id="bet">{{ playerBet }}</h3>
+        <h3 id="bet">{{ playerBet | currency:'USD':'code'}}</h3>
         <div>
             <button *ngIf="play === 1 && playerScore < 21" class="btn btn-md btn-primary" (click)="addCard()">Hit</button>
             <button *ngIf="play === 1 && playerScore < 21" class="btn btn-md btn-warning" (click)="stand()">Stand</button>
