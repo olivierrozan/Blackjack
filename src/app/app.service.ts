@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AppService {
+    /**
+     * initDock
+     * Inits the dock and shuffle the cards
+     * Without shuffling the cards are ordered asc
+     */
     initDock() {
         let cards = [];
         let colors = ['♠', '♥', '♦', '♣'];
@@ -19,7 +24,11 @@ export class AppService {
 
         return cards;
     }
-
+    /**
+     * shuffle
+     * @param a
+     * Shuffles the deck
+     */
     shuffle(a: any[]) {
         let j, x;
         for (let i = a.length - 1; i > 0; i--) {
@@ -29,7 +38,10 @@ export class AppService {
             a[j] = x;
         }
     }
-
+    /**
+     * countScore
+     * Increments values of cards
+     */
     countScore(cards: any[]): number {
         let score = 0;
 
@@ -49,7 +61,11 @@ export class AppService {
 
         return score;
     }
-
+    /**
+     * dealCards
+     * @param dock
+     * Give the 2 first cards to player and dealer
+     */
     dealCards(dock: any[]): any {
         let cards = [];
 
