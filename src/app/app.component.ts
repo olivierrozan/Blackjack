@@ -91,7 +91,10 @@ export class AppComponent implements OnInit {
     */
     stand(): void {
         this.play = 2;
-        this.checkWinner();
+        let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
+        this.message = app.message;
+        this.money += app.money;
+        this.diffMoney = app.diffMoney;
     }
 
     /**
@@ -114,20 +117,11 @@ export class AppComponent implements OnInit {
         this.play = 1;
         this.money -= this.playerBet;
 
-        this.blackjack();
-    }
-
-    blackjack() {
-        if (this.playerScore === 21) {
-            this.play = 2;
-            this.message = 'Blackjack!';
-            this.diffMoney = 2.5 * this.playerBet;
-            this.money += this.diffMoney;
-        } else if (this.iaScore === 21) {
-            this.play = 2;
-            this.message = 'You lose!';
-            this.diffMoney = 0;
-        }
+        let app = this.appService.blackjack(this.playerScore, this.iaScore, this.playerBet);
+        this.play = app.play;
+        this.message = app.message;
+        this.money += app.money;
+        this.diffMoney = app.diffMoney;
     }
 
     /**
@@ -136,26 +130,5 @@ export class AppComponent implements OnInit {
      */
     resetBet() {
         this.playerBet = 0;
-    }
-
-    /**
-     * checkWinner
-     * Checks the winner
-     */
-    checkWinner() {
-        // Rules
-        if (this.playerScore > 21 ||
-            (this.iaScore > this.playerScore && this.iaScore <= 21)) {
-            this.message = 'You lose!';
-            this.diffMoney = 0;
-        } else if (this.playerScore > this.iaScore && this.playerScore <= 21) {
-            this.message = 'You win!';
-            this.diffMoney = 2 * this.playerBet;
-        } else if (this.iaScore === this.playerScore) {
-            this.message = 'Draw!';
-            this.diffMoney = this.playerBet;
-        }
-
-        this.money += this.diffMoney;
     }
 }
