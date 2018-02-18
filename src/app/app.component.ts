@@ -114,14 +114,19 @@ export class AppComponent implements OnInit {
         this.play = 1;
         this.money -= this.playerBet;
 
-        // Checks Blakjack
-        if (this.playerScore === 21 || this.iaScore === 21) {
-            this.stand();
+        this.blackjack();
+    }
 
-            if (this.playerScore === 21) {
-                this.diffMoney = 1.5 * this.playerBet;
-                this.money += this.diffMoney;
-            }
+    blackjack() {
+        if (this.playerScore === 21) {
+            this.play = 2;
+            this.message = 'Blackjack!';
+            this.diffMoney = 2.5 * this.playerBet;
+            this.money += this.diffMoney;
+        } else if (this.iaScore === 21) {
+            this.play = 2;
+            this.message = 'You lose!';
+            this.diffMoney = 0;
         }
     }
 
@@ -139,7 +144,8 @@ export class AppComponent implements OnInit {
      */
     checkWinner() {
         // Rules
-        if (this.playerScore > 21 || (this.iaScore > this.playerScore && this.iaScore <= 21)) {
+        if (this.playerScore > 21 ||
+            (this.iaScore > this.playerScore && this.iaScore <= 21)) {
             this.message = 'You lose!';
             this.diffMoney = 0;
         } else if (this.playerScore > this.iaScore && this.playerScore <= 21) {
