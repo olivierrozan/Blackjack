@@ -3,6 +3,7 @@
         <h1>Blackjack
             <span style="font-size: 18px;">{{ cards.length }} Cards left</span>
             <span style="font-size: 24px; margin-left: 10%;">{{ money | currency:'USD':'code' }}</span>
+            <span *ngIf="play === 2 && message !== 'You lose!'" style="font-size: 24px; margin-left: 10px;">+{{diffMoney | currency:'USD':'code' }}</span>
         </h1>
     </header>
 </div>

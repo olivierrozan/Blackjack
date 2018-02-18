@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
     play: number;
     playerBet: number;
     money: number;
+    diffMoney: number;
     message: string;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
@@ -118,7 +119,8 @@ export class AppComponent implements OnInit {
             this.stand();
 
             if (this.playerScore === 21) {
-                this.money += (1.5 * this.playerBet);
+                this.diffMoney = 1.5 * this.playerBet;
+                this.money += this.diffMoney;
             }
         }
     }
@@ -137,16 +139,17 @@ export class AppComponent implements OnInit {
      */
     checkWinner() {
         // Rules
-        if (this.playerScore > 21) {
+        if (this.playerScore > 21 || (this.iaScore > this.playerScore && this.iaScore <= 21)) {
             this.message = 'You lose!';
+            this.diffMoney = 0;
         } else if (this.playerScore > this.iaScore && this.playerScore <= 21) {
             this.message = 'You win!';
-            this.money += (2 * this.playerBet);
-        } else if (this.iaScore > this.playerScore && this.iaScore <= 21) {
-            this.message = 'You lose!';
+            this.diffMoney = 2 * this.playerBet;
         } else if (this.iaScore === this.playerScore) {
             this.message = 'Draw!';
-            this.money += this.playerBet;
+            this.diffMoney = this.playerBet;
         }
+
+        this.money += this.diffMoney;
     }
 }
