@@ -1,0 +1,4 @@
+<div class="card" *ngFor='let one of card; last as isLast' [style.background]="(isLast && play < 2) ? 'rgb(160,0,0)' : 'white'"
+    [style.color]="(isLast && play < 2) ? 'rgb(160,0,0)' : 'black'">
+    <span>{{one.label}}  <b style="font-size: 20px;">{{one.color}}</b></span>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { CardComponent } from './cards/cards.component';
+import { IaCardComponent } from './iaCards/iaCards.component';
 import { AppService } from './app.service';
 
 @Component({
@@ -61,7 +62,7 @@ export class AppComponent implements OnInit {
     /**
      * addCard
      * Adds a card to player
-    */
+     */
     addCard() {
         // Gives a card to player and counts the score
         this.playerCards.push(this.cards.shift());
@@ -84,13 +85,39 @@ export class AppComponent implements OnInit {
     }
 
     /**
+     * addIaCard
+     * Adds a card to dealer
+     */
+    addIaCard() {
+    // Gives a card to player and counts the score
+    this.iaCards.push(this.cards.shift());
+    this.iaScore = this.appService.countScore(this.iaCards);
+
+    // Finishes the game if score is greater than 21
+    if (this.iaScore >= 21 && this.iaCards.length === 2) {
+        this.stand();
+    }
+
+    // Re-init dock if empty
+    if (this.cards.length < 4) {
+        this.cards = this.appService.initDock();
+    }
+
+    // Creates <card> component: 1 per card
+    const factory = this.componentFactoryResolver.resolveComponentFactory(IaCardComponent);
+    const ref = this.viewContainerRef.createComponent(factory);
+    ref.changeDetectorRef.detectChanges();
+}
+
+    /**
      * stand
      * Player stops to play
      * Dealer plays
      * checks the winner
-    */
+     */
     stand(): void {
         this.play = 2;
+        this.addIaCard();
         let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
         this.message = app.message;
         this.money += app.money;
@@ -100,7 +127,7 @@ export class AppComponent implements OnInit {
     /**
      * bet
      * Displays the bet on ihm
-    */
+     */
     bet(bet: number): void {
         this.playerBet += bet;
         if (this.playerBet > this.money) {

@@ -10,11 +10,7 @@
 
 <div class="main-container">
     <div id="iaSide" [style.visibility]="play === 0 ? 'hidden' : 'visible'">
-        <div class="card" *ngFor='let one of iaCards; last as isLast' 
-            [style.background]="(isLast && play < 2) ? 'rgb(160,0,0)' : 'white'"
-            [style.color]="(isLast && play < 2) ? 'rgb(160,0,0)' : 'black'">
-            <span>{{one.label}} {{one.color}}</span>
-        </div>
+        <iacard [card]="iaCards" [play]="play"></iacard>
     </div>
 
     <h2 [style.visibility]="play < 2 ? 'hidden' : 'visible'" [style.color]="iaScore === 21 ? 'blue' : (iaScore < 21 ? 'white' : 'red')">{{ iaScore }}</h2>

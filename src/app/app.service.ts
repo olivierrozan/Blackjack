@@ -93,10 +93,10 @@ export class AppService {
         let money: number = 0;
         // Rules
         if (playerScore > 21 ||
-            (iaScore > playerScore && iaScore <= 21)) {
+            (iaScore > playerScore && iaScore <= 21) || iaScore === 21) {
             message = 'You lose!';
             diffMoney = 0;
-        } else if (playerScore > iaScore && playerScore <= 21) {
+        } else if ((playerScore > iaScore && playerScore <= 21) || iaScore > 21) {
             message = 'You win!';
             diffMoney = 2 * bet;
         } else if (iaScore === playerScore) {
