@@ -117,7 +117,11 @@ export class AppComponent implements OnInit {
      */
     stand(): void {
         this.play = 2;
-        this.addIaCard();
+
+        while (this.iaScore <= 17) {
+            this.addIaCard();
+        }
+
         let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
         this.message = app.message;
         this.money += app.money;
