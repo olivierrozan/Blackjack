@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
     stand(): void {
         this.play = 2;
 
-        while (this.iaScore <= 17) {
+        while (this.iaScore <= 17 && this.playerScore < 21) {
             this.addIaCard();
         }
 
