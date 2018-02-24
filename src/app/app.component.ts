@@ -166,4 +166,26 @@ export class AppComponent implements OnInit {
     resetBet() {
         this.playerBet = 0;
     }
+
+    /**
+     * double
+     * Doubles the bet
+     */
+    double() {
+        console.log(this.playerBet);
+        this.addCard();
+        this.stand();
+        this.money -= this.playerBet;
+        this.playerBet *= 2;
+        console.log(this.playerBet);
+
+        let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
+        this.message = app.message;
+        this.money += app.money;
+        this.diffMoney = app.diffMoney;
+    }
+
+    split() {
+
+    }
 }
