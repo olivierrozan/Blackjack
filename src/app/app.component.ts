@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
     money: number;
     diffMoney: number;
     message: string;
+    enableSplit: boolean;
 
     constructor(private componentFactoryResolver: ComponentFactoryResolver,
         private appService: AppService,
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
         this.deal();
         this.money = 1000;
         this.message = '';
+        this.enableSplit = false;
     }
 
     /**
@@ -53,6 +55,8 @@ export class AppComponent implements OnInit {
         let ia = this.appService.dealCards(this.cards);
         this.iaCards = ia.cards;
         this.cards = ia.dock;
+
+        this.enableSplit = this.playerCards[0].label === this.playerCards[1].label;
 
         // Displays player's and dealer's score
         this.playerScore = this.appService.countScore(this.playerCards);

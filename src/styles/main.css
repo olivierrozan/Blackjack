@@ -53,6 +53,14 @@ h3 {
 
 .token {
     border-radius: 50px;
+    color: white; 
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.token:hover:not(#reset) {
+    color: white;
+    opacity: 1;
 }
 
 #buttonsList > div, #bet {

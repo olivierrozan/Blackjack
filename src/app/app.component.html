@@ -23,19 +23,21 @@
     <div id="buttonsList">
         <h3 id="bet">{{ playerBet | currency:'USD':'code'}}</h3>
         <div>
-            <button *ngIf="play === 1 && playerScore < 21" class="btn btn-md btn-primary" (click)="addCard()">Hit</button>
-            <button *ngIf="play === 1 && playerScore < 21" class="btn btn-md btn-warning" (click)="stand()">Stand</button>
+            <button *ngIf="play === 1 && enableSplit" class="btn btn-md btn-primary" (click)="split()">Split</button>
+            <button *ngIf="play === 1" class="btn btn-md btn-warning" (click)="double()">Double</button>
+            <button *ngIf="play === 1" class="btn btn-md btn-success" (click)="addCard()">Hit</button>
+            <button *ngIf="play === 1" class="btn btn-md btn-danger" (click)="stand()">Stand</button>
             <button *ngIf="play === 2" class="btn btn-md btn-info" (click)="deal()">Restart</button>
         </div>
 
         <div *ngIf="play === 0">
-            <button class="btn btn-md btn-info token" (click)="bet(1)">1</button>
-            <button class="btn btn-md btn-info token" (click)="bet(5)">5</button>
-            <button class="btn btn-md btn-primary token" (click)="bet(10)">10</button>
-            <button class="btn btn-md btn-primary token" (click)="bet(50)">50</button>
-            <button class="btn btn-md btn-warning token" (click)="bet(100)">100</button>
-            <button class="btn btn-md btn-warning token" (click)="bet(500)">500</button>
-            <button class="btn btn-md btn-danger token" (click)="resetBet()">Reset</button>
+            <button style="background-color: #F44336;" class="btn btn-md token" (click)="bet(1)">1</button>
+            <button style="background-color: #FF9800;" class="btn btn-md token" (click)="bet(5)">5</button>
+            <button style="background-color: #FFC107;" class="btn btn-md token" (click)="bet(10)">10</button>
+            <button style="background-color: #4CAF50;" class="btn btn-md token" (click)="bet(50)">50</button>
+            <button style="background-color: #3F51B5;" class="btn btn-md token" (click)="bet(100)">100</button>
+            <button style="background-color: #9C27B0;" class="btn btn-md token" (click)="bet(500)">500</button>
+            <button id ="reset" class="btn btn-md btn-danger token" (click)="resetBet()">Reset</button>
             <br />
             <button [disabled]="playerBet === 0" style='margin: 10px !important;' class="btn btn-md btn-primary" (click)="startGame()">Play</button>
         </div>
