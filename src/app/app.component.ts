@@ -45,22 +45,51 @@ export class AppComponent implements OnInit {
         this.play = 0;
         this.playerBet = 0;
         this.message = '';
+    }
+
+    /**
+     * startGame
+     * Player has finished to bet
+     * he can ask cards
+     */
+    startGame(): void {
+        this.play = 1;
+        this.money -= this.playerBet;
 
         // Deals cards to player
-        let player = this.appService.dealCards(this.cards);
-        this.playerCards = player.cards;
-        this.cards = player.dock;
+        for (let i = 0; i < 2; i++) {
+            setTimeout(() => {
+                this.addCard();
+            }, i * 1000);
+            setTimeout(() => {
+                this.addIaCard();
+            }, (i * 1000) + 500);
+        }
 
         // Deals cards to dealer
-        let ia = this.appService.dealCards(this.cards);
-        this.iaCards = ia.cards;
-        this.cards = ia.dock;
+        for (let i = 0; i < 2; i++) {
+        }
 
-        this.enableSplit = this.playerCards[0].label === this.playerCards[1].label;
+        if (this.playerCards.length === 2) {
 
-        // Displays player's and dealer's score
-        this.playerScore = this.appService.countScore(this.playerCards);
-        this.iaScore = this.appService.countScore(this.iaCards);
+            this.enableSplit = this.playerCards[0].label === this.playerCards[1].label;
+
+            // Displays player's and dealer's score
+            this.playerScore = this.appService.countScore(this.playerCards);
+            this.iaScore = this.appService.countScore(this.iaCards);
+
+            if (this.iaCards[0].label === 'A') {
+                $('#myModal').modal({
+                    backdrop: false
+                });
+            }
+        }
+
+        let app = this.appService.blackjack(this.playerScore, this.iaScore, this.playerBet);
+        this.play = app.play;
+        this.message = app.message;
+        this.money += app.money;
+        this.diffMoney = app.diffMoney;
     }
 
     /**
@@ -146,28 +175,6 @@ export class AppComponent implements OnInit {
         if (this.playerBet > this.money) {
             this.playerBet = this.money;
         }
-    }
-
-    /**
-     * startGame
-     * Player has finished to bet
-     * he can ask cards
-     */
-    startGame(): void {
-        this.play = 1;
-        this.money -= this.playerBet;
-
-        if (this.iaCards[0].label === 'A') {
-            $('#myModal').modal({
-                backdrop: false
-            });
-        }
-
-        let app = this.appService.blackjack(this.playerScore, this.iaScore, this.playerBet);
-        this.play = app.play;
-        this.message = app.message;
-        this.money += app.money;
-        this.diffMoney = app.diffMoney;
     }
 
     /**
