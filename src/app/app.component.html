@@ -24,7 +24,7 @@
         <h3 id="bet">{{ playerBet | currency:'USD':'code'}}</h3>
         <div>
             <button *ngIf="play === 1 && enableSplit" class="btn btn-md btn-primary" (click)="split()">Split</button>
-            <button *ngIf="play === 1" class="btn btn-md btn-warning" (click)="double()">Double</button>
+            <button *ngIf="play === 1 && playerBet * 2 <= money" class="btn btn-md btn-warning" (click)="double()">Double</button>
             <button *ngIf="play === 1" class="btn btn-md btn-success" (click)="addCard()">Hit</button>
             <button *ngIf="play === 1" class="btn btn-md btn-danger" (click)="stand()">Stand</button>
             <button *ngIf="play === 2" class="btn btn-md btn-info" (click)="deal()">Restart</button>
@@ -43,3 +43,22 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Assurance</h4>
+        </div>
+        <div class="modal-body">
+          Voulez-vous accepter ou refuser l'assurance?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="insurance(true)">Accepter</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="insurance(false)">Refuser</button>
+        </div>
+      </div>
+    </div>
+  </div>

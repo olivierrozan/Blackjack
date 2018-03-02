@@ -93,25 +93,25 @@ export class AppComponent implements OnInit {
      * Adds a card to dealer
      */
     addIaCard() {
-    // Gives a card to player and counts the score
-    this.iaCards.push(this.cards.shift());
-    this.iaScore = this.appService.countScore(this.iaCards);
+        // Gives a card to player and counts the score
+        this.iaCards.push(this.cards.shift());
+        this.iaScore = this.appService.countScore(this.iaCards);
 
-    // Finishes the game if score is greater than 21
-    if (this.iaScore >= 21 && this.iaCards.length === 2) {
-        this.stand();
+        // Finishes the game if score is greater than 21
+        // if (this.iaScore >= 21 && this.iaCards.length === 2) {
+        //     this.stand();
+        // }
+
+        // Re-init dock if empty
+        if (this.cards.length < 4) {
+            this.cards = this.appService.initDock();
+        }
+
+        // Creates <card> component: 1 per card
+        const factory = this.componentFactoryResolver.resolveComponentFactory(IaCardComponent);
+        const ref = this.viewContainerRef.createComponent(factory);
+        ref.changeDetectorRef.detectChanges();
     }
-
-    // Re-init dock if empty
-    if (this.cards.length < 4) {
-        this.cards = this.appService.initDock();
-    }
-
-    // Creates <card> component: 1 per card
-    const factory = this.componentFactoryResolver.resolveComponentFactory(IaCardComponent);
-    const ref = this.viewContainerRef.createComponent(factory);
-    ref.changeDetectorRef.detectChanges();
-}
 
     /**
      * stand
@@ -122,15 +122,15 @@ export class AppComponent implements OnInit {
     stand(): void {
         this.play = 2;
 
-        while (this.iaScore <= 17 && this.playerScore < 21) {
-            this.addIaCard();
-        }
+            while (this.iaScore <= 17 && this.playerScore < 21) {
+                this.addIaCard();
+            }
 
-        let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
-        this.message = app.message;
-        this.money += app.money;
-        this.diffMoney = app.diffMoney;
-    }
+            let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
+            this.message = app.message;
+            this.money += app.money;
+            this.diffMoney = app.diffMoney;
+            }
 
     /**
      * bet
@@ -152,6 +152,12 @@ export class AppComponent implements OnInit {
         this.play = 1;
         this.money -= this.playerBet;
 
+        if (this.iaCards[0].label === 'A') {
+            $('#myModal').modal({
+                backdrop: false
+            });
+        }
+
         let app = this.appService.blackjack(this.playerScore, this.iaScore, this.playerBet);
         this.play = app.play;
         this.message = app.message;
@@ -172,20 +178,59 @@ export class AppComponent implements OnInit {
      * Doubles the bet
      */
     double() {
-        console.log(this.playerBet);
-        this.addCard();
-        this.stand();
-        this.money -= this.playerBet;
-        this.playerBet *= 2;
-        console.log(this.playerBet);
 
-        let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
-        this.message = app.message;
-        this.money += app.money;
-        this.diffMoney = app.diffMoney;
+        let value = this.playerBet * 2;
+
+        if (value <= this.money) {
+            console.log(this.playerBet);
+            this.addCard();
+            this.stand();
+            this.money -= this.playerBet;
+            this.playerBet *= 2;
+            console.log(this.playerBet);
+
+            let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
+            this.message = app.message;
+            this.money += app.money;
+            this.diffMoney = app.diffMoney;
+        }
     }
 
+    /**
+     * split
+     * Splits the deck when cards are equals
+     */
     split() {
 
+    }
+
+    /**
+     * insurance
+     */
+    insurance(acceptInsurance: boolean) {
+        /*
+        if 1st ia card is A:
+        prompt: do you want insurance?
+        yes -> playerbet *= 1.5;
+        if 2nd card is neither 10 nor figure: win
+        else: stand()
+        */
+
+        if (acceptInsurance) {
+            this.playerBet *= 1.5;
+            this.money -= this.playerBet;
+            this.play = 2;
+
+            if (this.iaScore === 21) {
+                this.diffMoney = 2 * this.playerBet;
+                this.money += this.diffMoney;
+                this.message = 'You Win!';
+            } else {
+                this.message = 'You Lose!';
+            }
+
+        } else {
+            $('#myModal').modal('hide');
+        }
     }
 }

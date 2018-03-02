@@ -14,6 +14,9 @@ import { AppService } from './app.service';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/main.css';
 
+import * as $ from 'jquery';
+import { } from 'bootstrap';
+
 @NgModule({
     imports: [
         BrowserModule,
