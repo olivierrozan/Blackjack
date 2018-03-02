@@ -122,15 +122,20 @@ export class AppComponent implements OnInit {
     stand(): void {
         this.play = 2;
 
-            while (this.iaScore <= 17 && this.playerScore < 21) {
+        let interval = setInterval(() => {
+            if (this.iaScore < 17 && this.playerScore < 21) {
                 this.addIaCard();
+            } else {
+                clearInterval(interval);
+                interval = null;
+                let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
+                this.message = app.message;
+                this.money += app.money;
+                this.diffMoney = app.diffMoney;
             }
+        }, 1000);
 
-            let app = this.appService.checkWinner(this.playerScore, this.iaScore, this.playerBet);
-            this.message = app.message;
-            this.money += app.money;
-            this.diffMoney = app.diffMoney;
-            }
+    }
 
     /**
      * bet
