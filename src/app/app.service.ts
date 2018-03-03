@@ -113,7 +113,7 @@ export class AppService {
         };
     }
 
-    blackjack(playerScore: number, iaScore: number, bet: number) {
+    blackjack(playerScore: number, iaScore: number, bet: number, card: string) {
         let diffMoney: number = 0;
         let message: string = '';
         let money: number = 0;
@@ -124,7 +124,7 @@ export class AppService {
             message = 'Blackjack!';
             diffMoney = 2.5 * bet;
             money += diffMoney;
-        } else if (iaScore === 21 && playerScore !== 21) {
+        } else if ((iaScore === 21 && card !== 'A') && playerScore !== 21) {
             play = 2;
             message = 'You lose!';
             diffMoney = 0;

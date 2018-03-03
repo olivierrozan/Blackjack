@@ -66,28 +66,32 @@ export class AppComponent implements OnInit {
             }, i * 1000);
             setTimeout(() => {
                 this.addIaCard();
+
+                if (this.iaCards.length === 2) {
+                    this.enableSplit = this.playerCards[0].label === this.playerCards[1].label;
+
+                    // Displays player's and dealer's score
+                    this.playerScore = this.appService.countScore(this.playerCards);
+                    this.iaScore = this.appService.countScore(this.iaCards);
+
+                    if (this.iaCards[0].label === 'A') {
+                        $('#myModal').modal({
+                            backdrop: false
+                        });
+                    }
+
+                    let app = this.appService.blackjack(this.playerScore, this.iaScore, this.playerBet, this.iaCards[0].label);
+                    this.play = app.play;
+                    this.message = app.message;
+                    this.money += app.money;
+                    this.diffMoney = app.diffMoney;
+                }
             }, (i * 1000) + 500);
         }
 
-        if (this.playerCards.length === 2) {
-            this.enableSplit = this.playerCards[0].label === this.playerCards[1].label;
 
-            // Displays player's and dealer's score
-            this.playerScore = this.appService.countScore(this.playerCards);
-            this.iaScore = this.appService.countScore(this.iaCards);
 
-            if (this.iaCards[0].label === 'A') {
-                $('#myModal').modal({
-                    backdrop: false
-                });
-            }
-        }
 
-        let app = this.appService.blackjack(this.playerScore, this.iaScore, this.playerBet);
-        this.play = app.play;
-        this.message = app.message;
-        this.money += app.money;
-        this.diffMoney = app.diffMoney;
     }
 
     /**
