@@ -27,7 +27,7 @@
             <button *ngIf="play === 1 && playerBet * 2 <= money" class="btn btn-md btn-warning" (click)="double()">Double</button>
             <button *ngIf="play === 1" class="btn btn-md btn-success" (click)="addCard()">Hit</button>
             <button *ngIf="play === 1" class="btn btn-md btn-danger" (click)="stand()">Stand</button>
-            <button *ngIf="play === 2 && message !== ''" class="btn btn-md btn-info" (click)="deal()">Restart</button>
+            <!-- <button *ngIf="play === 2 && message !== ''" class="btn btn-md btn-info" (click)="deal()">Restart</button> -->
         </div>
 
         <div *ngIf="play === 0">

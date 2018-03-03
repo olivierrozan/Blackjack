@@ -163,9 +163,9 @@ export class AppComponent implements OnInit {
                 this.message = app.message;
                 this.money += app.money;
                 this.diffMoney = app.diffMoney;
+                setTimeout(() => { this.deal(); }, 2000);
             }
         }, 1000);
-
     }
 
     /**
@@ -242,7 +242,7 @@ export class AppComponent implements OnInit {
             } else {
                 this.message = 'You Lose!';
             }
-
+            setTimeout(() => { this.deal(); }, 2000);
         } else {
             $('#myModal').modal('hide');
         }
