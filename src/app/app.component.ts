@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
         this.play = 1;
         this.money -= this.playerBet;
 
-        // Deals cards to player
+        // Deals cards to player and dealer simulately every 500ms
         for (let i = 0; i < 2; i++) {
             setTimeout(() => {
                 this.addCard();
@@ -66,12 +66,7 @@ export class AppComponent implements OnInit {
             }, (i * 1000) + 500);
         }
 
-        // Deals cards to dealer
-        for (let i = 0; i < 2; i++) {
-        }
-
         if (this.playerCards.length === 2) {
-
             this.enableSplit = this.playerCards[0].label === this.playerCards[1].label;
 
             // Displays player's and dealer's score
