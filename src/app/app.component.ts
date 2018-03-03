@@ -45,6 +45,9 @@ export class AppComponent implements OnInit {
         this.play = 0;
         this.playerBet = 0;
         this.message = '';
+        this.playerScore = 0;
+        this.iaScore = 0;
+        this.enableSplit = false;
     }
 
     /**
