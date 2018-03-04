@@ -79,3 +79,25 @@ h3 {
     top: 33%;
     outline: none;
 }
+
+@keyframes tokens_zoomout {
+    0% {transform: scale(1.0);}
+    100% {transform: scale(0.0);}
+} 
+
+.tokens_fadeout {
+    animation-duration: 0.2s;
+    animation-name: tokens_zoomout;
+    animation-fill-mode: forwards;
+}
+
+@keyframes tokens_zoomin {
+    0% {transform: scale(0.0);}
+    100% {transform: scale(1.0);}
+} 
+
+.tokens_fadein {
+    animation-duration: 0.2s;
+    animation-name: tokens_zoomin;
+    animation-fill-mode: forwards;
+}

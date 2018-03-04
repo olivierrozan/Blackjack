@@ -40,6 +40,7 @@ export class AppComponent implements OnInit {
      * Deals cards to player and dealer
      */
     deal() {
+        $('#startGame').removeClass('tokens_fadeout').addClass('tokens_fadein').show();
         this.playerCards = [];
         this.iaCards = [];
         this.play = 0;
@@ -56,6 +57,8 @@ export class AppComponent implements OnInit {
      * he can ask cards
      */
     startGame(): void {
+        $('#startGame').removeClass('tokens_fadein').addClass('tokens_fadeout').show();
+
         this.play = 1;
         this.money -= this.playerBet;
 
@@ -85,13 +88,10 @@ export class AppComponent implements OnInit {
                     this.message = app.message;
                     this.money += app.money;
                     this.diffMoney = app.diffMoney;
+                    $('#startGame').removeClass('tokens_fadeout').hide();
                 }
             }, (i * 1000) + 500);
         }
-
-
-
-
     }
 
     /**
