@@ -124,15 +124,18 @@ export class AppService {
             message = 'Blackjack!';
             diffMoney = 2.5 * bet;
             money += diffMoney;
+            $('#gameButtons').hide();
         } else if ((iaScore === 21 && card !== 'A') && playerScore !== 21) {
             play = 2;
             message = 'You lose!';
             diffMoney = 0;
+            $('#gameButtons').hide();
         } else if (playerScore === 21 && iaScore === 21) {
             play = 2;
             message = 'Draw!';
             diffMoney = bet;
             money += diffMoney;
+            $('#gameButtons').hide();
         } else {
             play = 1;
         }

@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
         this.money = 1000;
         this.message = '';
         this.enableSplit = false;
+        $('#gameButtons').hide();
     }
 
     /**
@@ -40,7 +41,8 @@ export class AppComponent implements OnInit {
      * Deals cards to player and dealer
      */
     deal() {
-        $('#startGame').removeClass('tokens_fadeout').addClass('tokens_fadein').show();
+        $('#startGame').removeClass('fadeout').addClass('fadein').show();
+        $('#gameButtons').hide();
         this.playerCards = [];
         this.iaCards = [];
         this.play = 0;
@@ -57,7 +59,8 @@ export class AppComponent implements OnInit {
      * he can ask cards
      */
     startGame(): void {
-        $('#startGame').removeClass('tokens_fadein').addClass('tokens_fadeout').show();
+        $('#gameButtons').removeClass('fadeout').hide();
+        $('#startGame').removeClass('fadein').addClass('fadeout').show();
 
         this.play = 1;
         this.money -= this.playerBet;
@@ -71,6 +74,7 @@ export class AppComponent implements OnInit {
                 this.addIaCard();
 
                 if (this.iaCards.length === 2) {
+                    $('#gameButtons').show();
                     this.enableSplit = this.playerCards[0].label === this.playerCards[1].label;
 
                     // Displays player's and dealer's score
@@ -88,7 +92,8 @@ export class AppComponent implements OnInit {
                     this.message = app.message;
                     this.money += app.money;
                     this.diffMoney = app.diffMoney;
-                    $('#startGame').removeClass('tokens_fadeout').hide();
+                    $('#startGame').removeClass('fadeout').hide();
+                    $('#gameButtons').removeClass('fadeout').addClass('fadein').show();
                 }
             }, (i * 1000) + 500);
         }
@@ -152,9 +157,11 @@ export class AppComponent implements OnInit {
      */
     stand(): void {
         this.play = 2;
+        $('#gameButtons').removeClass('fadein').addClass('fadeout');
 
         let interval = setInterval(() => {
             if (this.iaScore < 17 && this.playerScore < 21) {
+                $('#gameButtons').hide();
                 this.addIaCard();
             } else {
                 clearInterval(interval);

@@ -80,12 +80,13 @@ h3 {
     outline: none;
 }
 
+/*ZOOM IN/OUT ANIMATIONS */
 @keyframes tokens_zoomout {
     0% {transform: scale(1.0);}
     100% {transform: scale(0.0);}
 } 
 
-.tokens_fadeout {
+.fadeout {
     animation-duration: 0.2s;
     animation-name: tokens_zoomout;
     animation-fill-mode: forwards;
@@ -96,7 +97,7 @@ h3 {
     100% {transform: scale(1.0);}
 } 
 
-.tokens_fadein {
+.fadein {
     animation-duration: 0.2s;
     animation-name: tokens_zoomin;
     animation-fill-mode: forwards;
