@@ -12,7 +12,7 @@ import { CardService } from './cards/cards.service';
 import { AppService } from './app.service';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../styles/main.css';
+import '../styles/main.scss';
 
 import * as $ from 'jquery';
 import { } from 'bootstrap';
