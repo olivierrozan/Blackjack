@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
      * Deals cards to player and dealer
      */
     deal() {
+        console.log($('card').length, $('iacard').length);
         $('#startGame').removeClass('fadeout').addClass('fadein').show();
         $('#gameButtons').hide();
         this.playerCards = [];
@@ -170,7 +171,11 @@ export class AppComponent implements OnInit {
                 this.message = app.message;
                 this.money += app.money;
                 this.diffMoney = app.diffMoney;
-                setTimeout(() => { this.deal(); }, 2000);
+                // Deletes cards components
+                this.viewContainerRef.clear();
+                setTimeout(() => {
+                    this.deal();
+                }, 2000);
             }
         }, 1000);
     }
