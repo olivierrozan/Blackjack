@@ -9,14 +9,19 @@
 </div>
 
 <div class="main-container">
-    <div id="iaSide" style="height: 220px;">
+    <div id="iaSide" style="height: 180px;">
         <iacard [card]="iaCards" [play]="play"></iacard>
     </div>
 
     <h2 style="height: 33px;" [style.visibility]="play < 2 ? 'hidden' : 'visible'" [style.color]="iaScore === 21 ? 'blue' : (iaScore < 21 ? 'white' : 'red')">{{ iaScore }}</h2>
+    
+    <h2 style="color: #FFC107;">Blackjack pays 3 to 2</h2>
+    <h3>Dealer must draw to 16 and stand on all 17's</h3>
+    <h2 id="insuranceTitle">Insurance pays 2 to 1</h2>
+    
     <h2 style="height: 33px;" [style.visibility]="play === 0 ? 'hidden' : 'visible'" [style.color]="playerScore === 21 ? 'blue' : (playerScore < 21 ? 'white' : 'red')">{{ playerScore }} {{ message }}</h2>
 
-    <div id="playerSide" style="height: 220px;">
+    <div id="playerSide" style="height: 180px;">
         <card [card]="playerCards"></card>
     </div>
 
