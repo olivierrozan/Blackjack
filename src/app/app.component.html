@@ -14,11 +14,11 @@
     </div>
 
     <h2 style="height: 33px;" [style.visibility]="play < 2 ? 'hidden' : 'visible'" [style.color]="iaScore === 21 ? 'blue' : (iaScore < 21 ? 'white' : 'red')">{{ iaScore }}</h2>
-    
-    <h2 style="color: #FFC107;">Blackjack pays 3 to 2</h2>
-    <h3>Dealer must draw to 16 and stand on all 17's</h3>
-    <h2 id="insuranceTitle">Insurance pays 2 to 1</h2>
-    
+
+    <h2 class="rule" style="color: #FFC107;">Blackjack pays 3 to 2</h2>
+    <h3 class="rule">Dealer must draw to 16 and stand on all 17's</h3>
+    <h2 class="rule" id="insuranceTitle">Insurance pays 2 to 1</h2>
+
     <h2 style="height: 33px;" [style.visibility]="play === 0 ? 'hidden' : 'visible'" [style.color]="playerScore === 21 ? 'blue' : (playerScore < 21 ? 'white' : 'red')">{{ playerScore }} {{ message }}</h2>
 
     <div id="playerSide" style="height: 180px;">
@@ -27,45 +27,53 @@
 
     <div id="buttonsList">
         <h3 id="bet">{{ playerBet | currency:'USD':'code'}}</h3>
-        
         <!-- *ngIf="iaCards.length >= 2" -->
-        <div id="gameButtons">
-            <button *ngIf="enableSplit" class="btn btn-md btn-primary" (click)="split()">Split</button>
-            <button *ngIf="playerBet * 2 <= money" class="btn btn-md btn-warning" (click)="double()">Double</button>
-            <button class="btn btn-md btn-success" (click)="addCard()">Hit</button>
-            <button class="btn btn-md btn-danger" (click)="stand()">Stand</button>
+        <div id="gameButtons" class="row">
+                <div class="col-sm-4">
+                    <button *ngIf="playerBet * 2 <= money" class="btn btn-md btn-warning" (click)="double()">Double</button><br />
+                    <button class="btn btn-md btn-success" (click)="addCard()">Hit</button>
+                </div>
+                <div class="col-sm-4">
+                    <button *ngIf="enableSplit" class="btn btn-md btn-primary" (click)="split()">Split</button>
+                </div>
+                <div class="col-sm-4">
+                    <button class="btn btn-md btn-danger" (click)="stand()">Stand</button>
+                </div>
+           
             <!-- <button *ngIf="play === 2 && message !== ''" class="btn btn-md btn-info" (click)="deal()">Restart</button> -->
         </div>
-        <!-- *ngIf="play === 0" -->
-        <div id="startGame" >
-            <button style="background-color: #F44336;" class="btn btn-md token" (click)="bet(1)">1</button>
-            <button style="background-color: #FF9800;" class="btn btn-md token" (click)="bet(5)">5</button>
-            <button style="background-color: #FFC107;" class="btn btn-md token" (click)="bet(10)">10</button>
-            <button style="background-color: #4CAF50;" class="btn btn-md token" (click)="bet(50)">50</button>
-            <button style="background-color: #3F51B5;" class="btn btn-md token" (click)="bet(100)">100</button>
-            <button style="background-color: #9C27B0;" class="btn btn-md token" (click)="bet(500)">500</button>
-            <button id ="reset" class="btn btn-md btn-danger token" (click)="resetBet()">Reset</button>
-            <br />
-            <button [disabled]="playerBet === 0" style='margin: 10px !important;' class="btn btn-md btn-primary" (click)="startGame()">Play</button>
-        </div>
+    <!-- *ngIf="play === 0" -->
+    <div id="startGame">
+        <button style="background-color: #F44336;" class="btn btn-md token" (click)="bet(1)">1</button>
+        <button style="background-color: #FF9800;" class="btn btn-md token" (click)="bet(5)">5</button>
+        <button style="background-color: #FFC107;" class="btn btn-md token" (click)="bet(10)">10</button>
+        <button style="background-color: #4CAF50;" class="btn btn-md token" (click)="bet(50)">50</button>
+        <button style="background-color: #3F51B5;" class="btn btn-md token" (click)="bet(100)">100</button>
+        <button style="background-color: #9C27B0;" class="btn btn-md token" (click)="bet(500)">500</button>
+        <button id="reset" class="btn btn-md btn-danger token" (click)="resetBet()">Reset</button>
+        <br />
+        <button [disabled]="playerBet === 0" style='margin: 10px !important;' class="btn btn-md btn-primary" (click)="startGame()">Play</button>
     </div>
+</div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Assurance</h4>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Assurance</h4>
+            </div>
+            <div class="modal-body">
+                Voulez-vous accepter ou refuser l'assurance?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="insurance(true)">Accepter</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="insurance(false)">Refuser</button>
+            </div>
         </div>
-        <div class="modal-body">
-          Voulez-vous accepter ou refuser l'assurance?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="insurance(true)">Accepter</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="insurance(false)">Refuser</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
